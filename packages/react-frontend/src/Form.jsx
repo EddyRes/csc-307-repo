@@ -1,41 +1,44 @@
-// src/Form.jsx
 import React, { useState } from "react";
 
-function Form({ handleSubmit }) {
-  const [form, setForm] = useState({ name: "", job: "" });
+function Form(props) {
+  const [person, setPerson] = useState({ name: "", job: "" });
 
-  function onChange(e) {
+  function handleChange(e) {
     const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
+    setPerson(prev => ({ ...prev, [name]: value }));
   }
 
-  function onSubmit(e) {
-    e.preventDefault();
-    if (!form.name.trim() || !form.job.trim()) return;
-    handleSubmit({ name: form.name.trim(), job: form.job.trim() });
-    setForm({ name: "", job: "" });
+  // exactly as spec
+  function submitForm() {
+    props.handleSubmit(person);
+    setPerson({ name: "", job: "" });
   }
 
   return (
-    <form onSubmit={onSubmit} style={{ marginTop: 16 }}>
-      <div style={{ display: "flex", gap: 8, marginBottom: 8 }}>
-        <input
-          name="name"
-          placeholder="Name"
-          value={form.name}
-          onChange={onChange}
-        />
-        <input
-          name="job"
-          placeholder="Job"
-          value={form.job}
-          onChange={onChange}
-        />
-        <button type="submit" disabled={!form.name.trim() || !form.job.trim()}>
-          Add
-        </button>
-      </div>
-    </form>
+    <div style={{ marginTop: 16 }}>
+      <label htmlFor="name">Name</label>
+      <input
+        id="name"
+        name="name"
+        value={person.name}
+        onChange={handleChange}
+      />
+      <label htmlFor="job" style={{ marginLeft: 8 }}>Job</label>
+      <input
+        id="job"
+        name="job"
+        value={person.job}
+        onChange={handleChange}
+        style={{ marginLeft: 8 }}
+      />
+      {/* exactly as spec: onClick, not onSubmit */}
+      <input
+        type="button"
+        value="Submit"
+        onClick={submitForm}
+        style={{ marginLeft: 8 }}
+      />
+    </div>
   );
 }
 

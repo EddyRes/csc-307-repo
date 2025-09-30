@@ -1,4 +1,3 @@
-// src/MyApp.jsx
 import React, { useState } from "react";
 import Table from "./Table";
 import Form from "./Form";
@@ -12,13 +11,13 @@ function MyApp() {
   ]);
 
   function removeOneCharacter(index) {
-    const updated = characters.filter((_, i) => i !== index);
-    setCharacters(updated);
+    setCharacters(characters.filter((_, i) => i !== index));
   }
 
-  function addCharacter(character) {
-	setCharacters(prev => [...prev, character]);
-}
+  // exactly as spec
+  function updateList(person) {
+    setCharacters([...characters, person]);
+  }
 
   return (
     <div className="container">
@@ -26,7 +25,8 @@ function MyApp() {
         characterData={characters}
         removeCharacter={removeOneCharacter}
       />
-	<Form handleSubmit={addCharacter} />
+      {/* exactly as spec */}
+      <Form handleSubmit={updateList} />
     </div>
   );
 }
