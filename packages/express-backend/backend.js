@@ -15,14 +15,25 @@ const users = {
   ]
 };
 
+const findUserByName = (name) =>
+  users["users_list"].filter((user) => user["name"] === name);
+
 app.get("/", (req, res) => {
-  res.send("Hello World!");
+  res.send("Hello Montalban");
 });
 
 app.get("/users", (req, res) => {
-  res.send(users);
+const name = req.query.name;
+  if (name !== undefined) {
+    const result = { users_list: findUserByName(name) };
+    res.send(result);
+  } else {
+    res.send(users);
+  }
 });
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
+
+
