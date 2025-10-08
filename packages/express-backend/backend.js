@@ -79,7 +79,7 @@ app.get("/users/:id", (req, res) => {
 app.post("/users", (req, res) => {
   const userToAdd = req.body; // expects JSON with id, name, job
   addUser(userToAdd);
-  res.status(201).send(); // Created
+  res.status(201).send(userToAdd); // Created
 });
 
 // DELETE /users/:id
