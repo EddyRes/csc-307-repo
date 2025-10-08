@@ -44,6 +44,9 @@ const deleteUserById = (id) => {
   return true;
 };
 
+const genId = () =>
+  Math.random().toString(36).slice(2, 8) + Math.random().toString(36).slice(2, 8);
+
 // ---- Routes ----
 app.get("/", (req, res) => {
   res.send("Hello from nodemon 🚀");
@@ -77,7 +80,7 @@ app.get("/users/:id", (req, res) => {
 
 // POST /users
 app.post("/users", (req, res) => {
-  const userToAdd = req.body; // expects JSON with id, name, job
+  const userToAdd = { ...req.body, id: genId() };
   addUser(userToAdd);
   res.status(201).send(userToAdd); // Created
 });
