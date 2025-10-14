@@ -1,6 +1,11 @@
 // packages/express-backend/backend.js
 import express from "express";
 import cors from "cors";
+import dotenv from "dotenv";  
+dotenv.config();              
+
+
+import { connectDB } from "./db.js";
 
 const app = express();
 const port = 8000;
@@ -8,6 +13,11 @@ const port = 8000;
 // Parse JSON bodies
 app.use(cors());
 app.use(express.json());
+
+connectDB().catch((err) => {
+  console.error("[db] connection error:", err);
+  process.exit(1);
+});
 
 // ---- In-memory data ----
 const users = {
