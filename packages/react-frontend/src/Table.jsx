@@ -5,38 +5,38 @@ function TableHeader() {
   return (
     <thead>
       <tr>
+        <th>ID</th>
         <th>Name</th>
         <th>Job</th>
-        <th>Remove</th>
+        <th>Actions</th>
       </tr>
     </thead>
   );
 }
 
-function TableBody({ characterData, removeCharacter }) {
-  const rows = characterData.map((row, index) => (
-    <tr key={index}>
+function TableBody({ characterData, removeCharacterById }) {
+  const rows = characterData.map((row) => (
+    <tr key={row._id}>
+      <td>{row._id}</td>
       <td>{row.name}</td>
       <td>{row.job}</td>
       <td>
-        <button onClick={() => removeCharacter(index)}>Delete</button>
+        <button onClick={() => removeCharacterById(row._id)}>Delete</button>
       </td>
     </tr>
   ));
   return <tbody>{rows}</tbody>;
 }
 
-function Table({ characterData, removeCharacter }) {
+export default function Table({ characterData, removeCharacterById }) {
   return (
     <table>
       <TableHeader />
       <TableBody
         characterData={characterData}
-        removeCharacter={removeCharacter}
+        removeCharacterById={removeCharacterById}
       />
     </table>
   );
 }
-
-export default Table;
 
